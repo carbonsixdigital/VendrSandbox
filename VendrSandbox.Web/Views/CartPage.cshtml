@@ -1,0 +1,78 @@
+﻿@inherits UmbracoViewPage<CartPage>
+@{
+    Layout = "Master.cshtml";
+}
+@if (Model == null) { return; }
+
+@section Scripts {
+
+    @if (!(TempData["cartUpdated"]?.ToString()).IsNullOrWhiteSpace())
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Toastify({
+                    text: "Cart successfully updated",
+                    duration: 3000,
+                    gravity: "bottom", // `top` or `bottom`
+                    position: 'center', // `left`, `center` or `right`
+                    backgroundColor: "#ffc107",
+                    className: "",
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                }).showToast();
+            });
+        </script>
+    }
+}
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col">
+            <h1>@Model.Name</h1>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Order != null && Model.Order.OrderLines.Count > 0)
+    {
+        using (Html.BeginUmbracoForm("UpdateCart", "CartSurface"))
+        {
+            @Html.AntiForgeryToken();
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order.OrderLines.Select((ol, i) => new { OrderLine = ol, Index = i }))
+                    {
+                        @Html.Partial("~/Views/Partials/Checkout/CartItem.cshtml", new CartItemViewModel(item.OrderLine, item.Index))
+                    }
+                </tbody>
+                <tfoot>
+                    <tr scope="row">
+                        <td colspan="3">Subtotal</td>
+                        <td>@(Model.Order.SubtotalPrice.Value.Formatted())</td>
+                    </tr>
+                    <tr scope="row">
+                        <td colspan="4">Shipping calculated at checkout</td>
+                    </tr>
+                    <tr scope="row">
+                        <td colspan="4">
+                            <div>
+                                <button class="btn btn-warning" title="Refresh Cart"><i class="fa fa-refresh"></i>Update</button>
+                                <a href="@(Model.CheckoutPage.Url)" class="btn btn-primary">Checkout</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+    }
+    else
+    {
+        <h1>Your cart is empty</h1>
+    }
+</div>

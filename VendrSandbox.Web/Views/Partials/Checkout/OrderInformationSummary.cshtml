@@ -1,0 +1,39 @@
+﻿@inherits UmbracoViewPage<IOrderReviewPage>
+@if (Model == null) { return; }
+
+<div>
+    <h3>Contact Information</h3>
+    <p>@Model.Order.CustomerInfo.Email</p>
+
+    <div>
+        <div>
+            <h3>Billing Information</h3>
+            <p>
+                <strong>@Model.Order.CustomerInfo.FirstName @Model.Order.CustomerInfo.LastName</strong>
+                <br />
+                @Html.Raw(string.Join("<br />", new string[] {
+                    Model.Order.Properties["billingAddressLine1"],
+                    Model.Order.Properties["billingAddressLine2"],
+                    Model.Order.Properties["billingCity"],
+                    Model.PaymentCountry.Name,
+                    Model.Order.Properties["billingZipCode"]
+                }.Where(x => !x.IsNullOrWhiteSpace())))
+            </p>
+        </div>
+        <div>
+            <h3>Shipping Information</h3>
+            <p>
+                <strong>@Model.Order.Properties["shippingFirstName"] @Model.Order.Properties["shippingLastName"]</strong>
+                <br />
+                @Html.Raw(string.Join("<br />", new string[] {
+                    Model.Order.Properties["shippingAddressLine1"],
+                    Model.Order.Properties["shippingAddressLine2"],
+                    Model.Order.Properties["shippingCity"],
+                    Model.ShippingCountry.Name,
+                    Model.Order.Properties["shippingZipCode"]
+                }.Where(x => !x.IsNullOrWhiteSpace())))
+            </p>
+        </div>
+    </div>
+
+</div>

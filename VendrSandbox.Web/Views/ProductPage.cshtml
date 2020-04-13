@@ -1,0 +1,44 @@
+﻿@inherits UmbracoViewPage<ProductPage>
+@{
+    Layout = "Master.cshtml";
+
+    var addedProductReference = TempData["addedProductReference"]?.ToString();
+}
+@if (Model == null) { return; }
+
+@section Head {
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        .toastify-center {
+            max-width: calc(100% - 30px);
+        }
+    </style>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    @if (!addedProductReference.IsNullOrWhiteSpace())
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Toastify({
+                    text: "Item successfully added to cart",
+                    duration: 3000,
+                    gravity: "bottom", // `top` or `bottom`
+                    position: 'center', // `left`, `center` or `right`
+                    backgroundColor: "#ffc107",                   
+                    className: "",
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                }).showToast();
+            });
+        </script>
+    }
+}
+<div class="container">
+    <div>
+        @Html.Partial("Partials/Products/ProductItem", Model)
+    </div>
+</div>
+
+

@@ -1,0 +1,24 @@
+﻿@model dynamic
+@using Umbraco.Web.Templates
+@{
+	var embedValue = "test";
+	try
+	{
+		embedValue = Model.value.preview;
+	}
+	catch (Exception ex)
+	{
+		embedValue = Model.value;
+	}
+}
+
+@if (Model.value.url.ToString().Contains("youtube") || Model.value.url.ToString().Contains("vimeo"))
+{
+	<div class="video-wrapper embed-responsive embed-responsive-16by9">
+		@Html.Raw(embedValue)
+	</div>
+}
+else
+{
+	@Html.Raw(embedValue)
+}

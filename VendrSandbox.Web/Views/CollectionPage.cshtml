@@ -1,0 +1,18 @@
+﻿@inherits UmbracoViewPage<CollectionPage>
+@{
+    Layout = "Master.cshtml";
+}
+@if (Model == null) { return; }
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col">
+            <h1>@Model.Name</h1>
+        </div>
+    </div>
+
+    @if (Model.Items != null)
+    {
+        @Html.Partial("Partials/Products/ProductList", Model.Items)
+    }
+</div>

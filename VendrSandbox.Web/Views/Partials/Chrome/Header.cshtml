@@ -1,0 +1,23 @@
+﻿@model HeaderViewModel
+@if (Model == null) { return; }
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    @if (Model.LogoTop != null)
+    {
+        <a class="navbar-brand" href="@Model.HomepageUrl"><img src="@Url.GetCropUrl(Model.LogoTop, 100, 50)" alt="@Model.LogoTop.AltText"></a>
+    }
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    @if (Model.PrimaryNavigation != null)
+    {
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            @Html.Partial("Partials/Chrome/PrimaryNavigation", Model.PrimaryNavigation)
+
+            @if (Model.CartPage != null)
+            {
+                <a href="@Model.CartPage.Url" class="text-white"><i class="fa fa-shopping-cart white"></i> Cart @Html.Action("CartCount", "CartSurface")</a>
+            }
+        </div>
+    }
+</nav>

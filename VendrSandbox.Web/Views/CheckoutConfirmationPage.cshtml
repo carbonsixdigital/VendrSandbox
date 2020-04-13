@@ -1,0 +1,13 @@
+﻿@inherits UmbracoViewPage<CheckoutConfirmationPage>
+@{
+    Layout = "CheckoutStepPage.cshtml";
+}
+
+<div>
+    <span><i class="fa fa-check text-green-500"></i></span>
+    <h3>Thank you for your order #@(Model.Order.OrderNumber ?? Model.Order.CartNumber)</h3>
+    <p>A confirmation email has been sent to <strong>@(Model.Order.CustomerInfo.Email)</strong></p>
+    <p><a href="/" class="bg-@(Model.CheckoutPage.PrimaryColor) btn btn-primary">Return to Store</a></p>
+</div>
+
+@Html.Partial("~/Views/Partials/Checkout/OrderInformationSummary.cshtml")

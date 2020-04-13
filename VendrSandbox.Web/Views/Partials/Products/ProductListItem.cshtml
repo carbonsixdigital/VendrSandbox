@@ -1,0 +1,25 @@
+﻿@inherits UmbracoViewPage<ProductPage>
+@if (Model == null) { return; }
+
+    <div class="card" style="width: 18rem;">
+
+        @if (Model.PrimaryImage != null)
+        {
+            <img src="@(Url.GetCropUrl(Model.PrimaryImage, 200, 200))" class="card-img-top mt-3" alt="@Model.PrimaryImage.GetAltText()" />
+        }
+        <div class="card-body">
+            <h5 class="card-title">@Model.Parent.Name - @Model.Name</h5>
+
+            <div class="card-text">
+                @if (Model.Variants != null && Model.Variants.Any())
+                {
+                    <text>@(!Model.VariantPricesAllSame ? "From " : "") @Model.VariantPriceFirst</text>
+                }
+                else
+                {
+                    @(Model.CalculatePrice()?.Formatted())
+                }
+            </div>
+        </div>
+        <a href="@Model.Url" class="btn btn-primary">More</a>
+    </div>

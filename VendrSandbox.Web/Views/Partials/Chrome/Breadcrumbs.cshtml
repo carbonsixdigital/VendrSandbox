@@ -1,0 +1,38 @@
+﻿@model BreadcrumbsViewModel
+@if (Model == null || Model.Breadcrumbs == null || Model.Breadcrumbs.Items == null || !Model.Breadcrumbs.Items.Any()) { return; }
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList">
+        @foreach (var item in Model.Breadcrumbs.Items.Select((value, index) => new { index, value }))
+        {
+        <li class="breadcrumb-item"
+            itemprop="itemListElement"
+            itemscope="itemscope"
+            itemtype="http://schema.org/ListItem"
+            @(item.value.IsCurrent ? "aria-current=\"page\"" : "")>
+
+            @if (item.value.IsCurrent)
+            {
+                <span itemprop="item" class="breadcrumb-link">
+                    <span itemprop="name">@item.value.Title</span>
+                    <meta itemprop="position" content="@item.index">
+                </span>
+            }
+            else if (item.value.TemplateId > 0)
+            {
+                <a itemprop="item" class="breadcrumb-link" href="@item.value.Url">
+                    <span itemprop="name">@item.value.Title</span>
+                    <meta itemprop="position" content="@item.index">
+                </a>
+            }
+            else
+            {
+                <span itemprop="item" class="breadcrumb-link">
+                    <span itemprop="name">@item.value.Title</span>
+                    <meta itemprop="position" content="@item.index">
+                </span>
+            }
+        </li>   
+        }
+    </ol>
+</nav>

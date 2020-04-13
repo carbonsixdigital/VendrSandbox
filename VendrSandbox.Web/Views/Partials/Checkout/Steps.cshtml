@@ -1,0 +1,27 @@
+﻿@model CheckoutStepPage
+@if (Model == null) { return; }
+
+<div class="list-group list-group-horizontal">
+    @{ var passedStep = false;
+        foreach (var item in Model.Steps.Items.Select((s, i) => new { Step = s, Index = i }))
+        {
+            if (!passedStep && item.Step.Id != Model.Id)
+            {
+                if (Model.CanGoBack)
+                {
+                    <a href="@item.Step.Url" class="list-group-item list-group-item-action list-group-item-secondary">@(item.Step.ShortStepName ?? item.Step.Name)</a>
+                }
+                else
+                {
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" tabindex="-1" aria-disabled="true" style="pointer-events: none;">@(item.Step.ShortStepName ?? item.Step.Name)</a>
+                }
+            }
+            else
+            {
+                <a href="#" class="list-group-item list-group-item-action disabled @(item.Step.Id == Model.Id ? "active" : "")" tabindex="-1" aria-disabled="true">@(item.Step.ShortStepName ?? item.Step.Name)</a>
+            }
+
+            passedStep = passedStep || item.Step.Id == Model.Id;
+        }
+    }
+</div>

@@ -1,0 +1,78 @@
+﻿@inherits UmbracoViewPage<CheckoutInformationPage>
+@{
+    Layout = "CheckoutStepPage.cshtml";
+}
+
+@section aside {
+    @Html.Partial("~/Views/Partials/Checkout/DiscountCode.cshtml", Model)
+}
+
+@using (Html.BeginUmbracoForm("UpdateOrderInformation", "CheckoutSurface", new { @class = "form" }))
+{
+    @Html.AntiForgeryToken();
+
+    <input type="hidden" name="nextStep" value="@(Model.Steps?.Next?.Id)" />
+
+    <h3 class="">Contact Information</h3>
+    <input name="email" type="email" placeholder="Email" class="form-control" value="@(Model.Order.CustomerInfo.Email)" required />
+    <label class="">
+        <input name="marketingOptIn" type="checkbox" value="true" class="form-control" @Html.Raw(Model.Order.Properties["marketingOptIn"] == "1" ? "checked=\"checked\"" : "") /> Keep me up to date on news and exclusive offers
+    </label>
+
+    <h3 class="">Billing Address</h3>
+
+    <div class="form-group">
+        <input name="billingAddress.Firstname" type="text" placeholder="First name" class="form-control" value="@(Model.Order.CustomerInfo.FirstName)" required />
+        <input name="billingAddress.Lastname" type="text" placeholder="Last name" class="form-control" value="@(Model.Order.CustomerInfo.LastName)" required />
+    </div>
+
+    <input name="billingAddress.Line1" type="text" placeholder="Address (line 1)" class="form-control" value="@(Model.Order.Properties["billingAddressLine1"])" required />
+    <input name="billingAddress.Line2" type="text" placeholder="Address (line 2)" class="form-control" value="@(Model.Order.Properties["billingAddressLine2"])" />
+    <input name="billingAddress.City" type="text" placeholder="City" class="form-control" value="@(Model.Order.Properties["billingCity"])" required />
+
+    <div class="form-group">
+        <select name="billingAddress.Country" placeholder="Country" class="form-control">
+            @foreach (var country in Model.Countries)
+            {
+                <option value="@(country.Id)" @Html.Raw(Model.Order.PaymentInfo.CountryId == country.Id ? "selected=\"selected\"" : "")>@(country.Name)</option>
+            }
+        </select>
+        <input name="billingAddress.ZipCode" type="text" placeholder="Postcode" class="form-control" value="@(Model.Order.Properties["billingZipCode"])" required />
+    </div>
+    <input name="billingAddress.Telephone" type="text" placeholder="Phone" class="form-control" value="@(Model.Order.Properties["billingTelephone"])" />
+
+    <label class="">
+        <input name="shippingSameAsBilling" type="checkbox" class="form-control" value="true" @Html.Raw(Model.Order.Properties["shippingSameAsBilling"] == "1" || !Model.Order.Properties.ContainsKey("shippingSameAsBilling") ? "checked=\"checked\"" : "") /> Shipping address is same as billing address
+    </label>
+
+    <div id="shipping-info" style="display: none;">
+
+        <h3 class="">Shipping Address</h3>
+
+        <div class="form-group">
+            <input name="shippingAddress.Firstname" type="text" placeholder="First name" class="form-control" value="@(Model.Order.Properties["shippingFirstName"])" />
+            <input name="shippingAddress.Lastname" type="text" placeholder="Last name" class="form-control" value="@(Model.Order.Properties["shippingLastName"])" />
+        </div>
+
+        <input name="shippingAddress.Line1" type="text" placeholder="Address (line 1)" class="form-control" value="@(Model.Order.Properties["shippingAddressLine1"])" />
+        <input name="shippingAddress.Line2" type="text" placeholder="Address (line 2)" class="form-control" value="@(Model.Order.Properties["shippingAddressLine2"])" />
+        <input name="shippingAddress.City" type="text" placeholder="City" class="form-control" value="@(Model.Order.Properties["shippingCity"])" />
+
+        <div class="form-group">
+            <select name="shippingAddress.Country" placeholder="Country" class="form-control">
+                @foreach (var country in Model.Countries)
+                {
+                    <option value="@(country.Id)" @Html.Raw(Model.Order.PaymentInfo.CountryId == country.Id ? "selected=\"selected\"" : "")>@(country.Name)</option>
+                }
+            </select>
+            <input name="shippingAddress.ZipCode" type="text" placeholder="Postcode" class="form-control" value="@(Model.Order.Properties["shippingZipCode"])" />
+        </div>
+        <input name="shippingAddress.Telephone" type="text" placeholder="Phone" class="form-control" value="@(Model.Order.Properties["shippingTelephone"])" />
+
+    </div>
+
+    <h3 class="">Comments</h3>
+    <textarea name="comments" placeholder="Enter any comments here" class="form-control">@(Model.Order.Properties["comments"])</textarea>
+
+    @Html.Partial("~/Views/Partials/Checkout/PrevNext.cshtml")
+}

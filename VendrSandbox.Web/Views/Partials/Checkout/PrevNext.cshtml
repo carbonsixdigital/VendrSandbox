@@ -1,0 +1,27 @@
+﻿@inherits UmbracoViewPage<CheckoutStepPage>
+@if (Model.Steps == null) { return; }
+
+<div class="row mb-5 mt-5">
+    @if (Model.CanGoBack)
+    {
+        if (Model.Steps.Previous != null)
+        {
+            <div class="col-6 align-left">
+                <a href="@(Model.Steps.Previous.Url)" class="text-@(Model.CheckoutPage.PrimaryColor) btn btn-warning"><i class="fa fa-angle-left"></i> Return to @(Model.Steps.Previous.Name)</a>
+            </div>
+        }
+        else
+        {
+            <div class="col-6 align-left">
+                <a href="@(Model.CartPage.Url)" class="text-@(Model.CheckoutPage.PrimaryColor) btn btn-warning"><i class="fa fa-angle-left"></i> Return to Cart</a>
+            </div>
+        }
+    }
+
+    @if (Model.Steps.Next != null)
+    {
+        <div class="col-6 align-right">
+            <button class="bg-@(Model.CheckoutPage.PrimaryColor) btn btn-primary" type="submit">Continue to @(Model.Steps.Next.Name)</button>
+        </div>
+    }
+</div>

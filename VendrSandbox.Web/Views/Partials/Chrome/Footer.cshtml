@@ -1,0 +1,27 @@
+﻿@model FooterViewModel
+@if (Model == null) { return; }
+
+<nav class="navbar navbar-dark bg-dark">
+
+    @if (Model.LogoBottom != null)
+    {
+        <a class="navbar-brand" href="@Model.HomepageUrl"><img src="@Url.GetCropUrl(Model.LogoBottom, 100, 50)" alt="@Model.LogoBottom.AltText"></a>
+    }
+
+    @if (Model.FooterLinks != null)
+    {
+        <ul class="nav">
+            @foreach (var link in Model.FooterLinks)
+            {
+                <li><a href="@link.Url" @Html.Raw(link.TargetAttribute()) class="nav-item text-white">@link.Title</a></li>
+            }
+        </ul>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.Copyright))
+    {
+        <div class="copyright text-white"><p>@Html.Raw(Model.Copyright)</p></div>
+    }
+
+  
+</nav>

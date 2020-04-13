@@ -1,0 +1,21 @@
+﻿@inherits UmbracoViewPage<IProductGroup>
+@if (Model == null) { return; }
+
+<div class="card" style="width: 18rem;">
+
+    @if (Model.Image != null)
+    {
+        <img src="@(Url.GetCropUrl(Model.Image, 200, 200))" class="card-img-top" alt="@Model.Image.GetAltText()" />
+    }
+
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="card-text">@Model.Description</p>
+        }
+
+    </div>
+    <a href="@Model.Url" class="btn btn-secondary">View More</a>
+</div>

@@ -1,0 +1,35 @@
+﻿@using Vendr.Core;
+@using Umbraco.Web.Models;
+@inherits UmbracoViewPage<CheckoutStepPage>
+@{
+    Layout = "Master.cshtml";
+}
+
+@section Head {
+    @RenderSection("Head", false)
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    <script src="/scripts/checkout.js"></script>
+    @RenderSection("Scripts", false)
+}
+
+<div class="container mb-5">
+    <div class="row mb-5">
+        <div class="col-12">
+            @Html.Partial("~/Views/Partials/Checkout/Steps.cshtml", Model)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            @Html.Partial("_ValidationSummary", ViewData.ModelState)
+
+            @RenderBody()
+        </div>
+        <div class="col-12 col-lg-4">
+            @RenderSection("aside", false)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+﻿@inherits UmbracoViewPage<Master>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	@if (Model.MetaData != null)
+	{
+		@Html.Partial("Partials/Chrome/MetaData", Model.MetaData)
+	}
+
+	@RenderSection("Head", required: false)
+</head>
+<body>
+	@if (Model.JavaScript != null)
+	{
+		@Html.CachedPartial("Partials/JavaScript/Top", Model.JavaScript, Model.CachedPartialDuration, true)
+	}
+
+	<div class="wrapper" style="margin-top:78px;">
+
+		@if (Model.Header != null)
+		{
+			<header class="header">
+				@Html.CachedPartial("Partials/Chrome/Header", Model.Header, Model.CachedPartialDuration, true)
+			</header>
+		}
+
+		@if (Model.Cookie != null)
+		{
+			@Html.CachedPartial("Partials/Chrome/CookieMessage", Model.Cookie, Model.CachedPartialDuration, true)
+		}
+
+		<main class="main">
+			@if (Model.Breadcrumbs != null)
+			{
+				@Html.CachedPartial("Partials/Chrome/Breadcrumbs", Model.Breadcrumbs, Model.CachedPartialDuration, true)
+			}
+
+			@RenderBody()
+		</main>
+
+		@if (Model.Footer != null)
+		{
+			<footer class="footer">
+				@Html.CachedPartial("Partials/Chrome/Footer", Model.Footer, Model.CachedPartialDuration, true)
+			</footer>
+		}
+	</div>
+
+	@if (Model.JavaScript != null)
+	{
+		@Html.CachedPartial("Partials/JavaScript/Bottom", Model.JavaScript, Model.CachedPartialDuration, true)
+	}
+
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿@inherits UmbracoViewPage<ProductPage>
+@if (Model == null) { return; }
+@{ var addedProductReference = TempData["addedProductReference"]?.ToString(); }
+<div class="">
+    <img src="@(Model.PrimaryImage != null ? Url.GetCropUrl(Model.PrimaryImage, 500, 500).ToString() : "https://placehold.it/400x500")" class="product-image" />
+
+    @if (Model.Images.Count() > 1)
+    {
+        <div >
+            @foreach (var img in Model.Images)
+            {
+                <a href="@(Url.GetCropUrl(img, 500, 500).ToString())" class="product-image__thumb">
+                    <img src="@Url.GetCropUrl(img, 150, 150).ToString()" class="border w-full" />
+                </a>
+            }
+        </div>
+    }
+
+</div>
+<div>
+    @using (Html.BeginUmbracoForm("AddToCart", "CartSurface"))
+    {
+        @Html.AntiForgeryToken();
+        <div class="">
+            <h1 class="font-bold">@Model.Parent.Name - @Model.Name</h1>
+            @if (Model.Variants != null && Model.Variants.Any())
+            {
+                <select name="productReference" class="">
+                    @foreach (var variant in Model.Variants)
+                    {
+                        <option value="@variant.GetProductReference()" @Html.Raw(addedProductReference == variant.GetProductReference() ? "selected=\"selected\"" : "")>@(variant.Name) - @(variant.CalculatePrice()?.Formatted()) @* - @(variant.Inventory.HasValue && variant.Inventory.Value > 0 ? $"{Convert.ToInt32(variant.Inventory)} in stock" : "out of stock")*@</option>
+                    }
+                </select>
+            }
+            else
+            {
+                @Html.Hidden("productReference", Model.GetProductReference())
+
+                <p>@(Model.CalculatePrice()?.Formatted())</p>
+            }
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add to Cart</button>
+    }
+
+</div>
+
+<hr class="my-6" />
+<div>
+    <h2 class="text-2xl font-bold">Description</h2>
+    <div class="rte">
+        @Model.LongDescription
+    </div>
+</div>

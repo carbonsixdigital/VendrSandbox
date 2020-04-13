@@ -1,0 +1,11 @@
+﻿@inherits UmbracoViewPage<IEnumerable<ProductPage>>
+@if (Model == null) { return; }
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-12 col-md-6 col-lg-3 mb-5">        
+            @Html.Partial("Partials/Products/ProductListItem", product)
+        </div>
+    }
+</div>

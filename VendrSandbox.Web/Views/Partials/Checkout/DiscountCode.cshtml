@@ -1,0 +1,30 @@
+﻿@model CheckoutInformationPage
+@if (Model == null) { return; }
+
+<div>
+    <h3>Discount</h3>
+
+    @using (Html.BeginUmbracoForm("ApplyDiscountOrGiftCardCode", "CheckoutSurface", null, new { @class = "form" }))
+    {
+        @Html.AntiForgeryToken();
+
+        <div class="form-group">
+            <input type="text" name="code" placeholder="Discount / Gift Card Code" class="form-control" />
+            <button class="bg-@(Model.CheckoutPage.PrimaryColor) btn btn-info" type="submit">Apply</button>
+        </div>
+    }
+
+    @if (Model.Order.DiscountCodes.Count > 0)
+    {
+        using (Html.BeginUmbracoForm("RemoveDiscountOrGiftCardCode", "CheckoutSurface", null, new { @class = "form" }))
+        {
+            @Html.AntiForgeryToken();
+            <ul class="mt-4 block">
+                @foreach (var discountCode in Model.Order.DiscountCodes)
+                {
+                    <li><button name="Code" value="@discountCode.Code" class="btn btn-success"><i class="fa fa-times mr-1"></i> @discountCode.Code</button></li>
+                }
+            </ul>
+        }
+    }
+</div>

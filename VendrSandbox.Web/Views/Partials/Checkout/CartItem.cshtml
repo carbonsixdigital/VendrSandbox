@@ -1,0 +1,26 @@
+﻿@inherits UmbracoViewPage<CartItemViewModel>
+@if (Model == null || Model.OrderLine == null) { return; }
+
+<tr scope="row">
+    <td>
+        <div>
+            <span><i></i></span>
+            <div>
+                <a href="@(Model.Url)">@Model.OrderLine.Name</a><br />
+                <span>@Model.OrderLine.Sku</span><br />
+                <a href="@Url.SurfaceAction("RemoveFromCart",  "CartSurface", new { OrderLineId = Model.OrderLine.Id})"
+                   class="btn btn-secondary">remove</a>
+            </div>
+        </div>
+    </td>
+    <td data-label="Price">@(Model.OrderLine.UnitPrice.Value.Formatted())</td>
+    <td data-label="Quantity">
+        @Html.Hidden($"orderLines[{Model.Index}].Id", Model.OrderLine.Id)
+        @Html.TextBox($"orderLines[{Model.Index}].Quantity", (int)Model.OrderLine.Quantity, new
+        {
+            @type = "number",
+            @class = "form-control w-50"
+        })
+    </td>
+    <td data-label="Total">@(Model.OrderLine.TotalPrice.Value.Formatted())</td>
+</tr>

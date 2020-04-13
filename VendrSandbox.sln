@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendrSandbox.Web", "VendrSandbox.Web\VendrSandbox.Web.csproj", "{0486E022-7228-4E9E-94D7-007BECD53098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendrSandbox.Core", "VendrSandbox.Core\VendrSandbox.Core.csproj", "{E2A3BFA6-B365-406D-AA8A-9317FF56BCBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0486E022-7228-4E9E-94D7-007BECD53098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0486E022-7228-4E9E-94D7-007BECD53098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0486E022-7228-4E9E-94D7-007BECD53098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0486E022-7228-4E9E-94D7-007BECD53098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A3BFA6-B365-406D-AA8A-9317FF56BCBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A3BFA6-B365-406D-AA8A-9317FF56BCBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A3BFA6-B365-406D-AA8A-9317FF56BCBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A3BFA6-B365-406D-AA8A-9317FF56BCBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EE64DD3-0B82-4DC6-AF6D-C8B4539BA30E}
+	EndGlobalSection
+EndGlobal

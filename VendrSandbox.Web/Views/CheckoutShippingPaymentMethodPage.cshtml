@@ -1,0 +1,17 @@
+﻿@inherits UmbracoViewPage<CheckoutShippingPaymentMethodPage>
+@{
+    Layout = "CheckoutStepPage.cshtml";
+}
+
+@using (Html.BeginUmbracoForm("UpdateOrderShippingAndPaymentMethod", "CheckoutSurface"))
+{
+    @Html.AntiForgeryToken();
+
+    <input type="hidden" name="nextStep" value="@(Model.Steps?.Next?.Id)" />
+
+    @Html.Partial("~/Views/Partials/Checkout/ShippingMethods.cshtml", Model)
+
+    @Html.Partial("~/Views/Partials/Checkout/PaymentMethods.cshtml", Model)  
+
+    @Html.Partial("~/Views/Partials/Checkout/PrevNext.cshtml")
+}

@@ -1,0 +1,26 @@
+﻿@*@model CookieViewModel
+@if (Model == null) { return; }
+
+<div id="cookie-message" class="bg-green text-white">
+    <div class="container">
+        <div class="row justify-content-center ">
+            <div class="col-4-xs col-6-md mb-4 mb-md-4 mr-md-5 text-center pt-3">
+                @if (!string.IsNullOrWhiteSpace(Model.CookieMessage.ToString()))
+                {
+                    @Html.Raw(Model.CookieMessage)
+                }
+            </div>
+            <div class="col-8-xs col-6-md text-center"> 
+                @if (Model.CookieCta != null)
+                {
+                    <a href="@Model.CookieCta.Url" class="btn btn-gray-100 mb-3 mb-md-0" @Html.Raw(Model.CookieCta.TargetAttribute())>@Model.CookieCta.Name</a>
+                }
+         
+                @if (!string.IsNullOrWhiteSpace(Model.CookieOKLabel))
+                {
+                    <a href="#" class="btn btn-gray-100 mb-3 mb-md-0"  id="cookie-message-ok">@Model.CookieOKLabel</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>*@

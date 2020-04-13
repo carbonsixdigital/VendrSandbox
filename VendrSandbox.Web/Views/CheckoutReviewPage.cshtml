@@ -1,0 +1,39 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<CheckoutReviewPage>
+
+@{
+    Layout = "CheckoutStepPage.cshtml";
+}
+
+@Html.Partial("~/Views/Partials/Checkout/OrderInformationSummary.cshtml")
+
+@using (Html.BeginPaymentForm(Model.Order))
+{
+    @Html.AntiForgeryToken();
+
+    <div class="border border-gray-300 rounded">
+
+        <label class="flex items-center py-4 px-4 cursor-pointer hover:bg-gray-100">
+            <input id="acceptTerms" type="checkbox" value="1" class="mr-3" />
+            <span class="font-medium">I agree and accept the sites terms of service</span>
+        </label>
+    </div>
+
+    <div class="row mb-5 mt-5">
+        @if (Model.Steps.Previous != null)
+        {
+            <div class="col-6 align-left"><a href="@(Model.Steps.Previous.Url)" class="text-@(Model.CheckoutPage.PrimaryColor) btn btn-warning"><i class="fa fa-angle-left"></i> Return to @(Model.Steps.Previous.Name)</a></div>
+        }
+        else
+        {
+            <div class="col-6 align-left"><a href="@(Model.CartPage.Url)" class="text-@(Model.CheckoutPage.PrimaryColor) btn btn-warning"><i class="fa fa-angle-left"></i> Return to Cart</a></div>
+        }
+
+        @if (Model.Steps.Next != null)
+        {
+            <div class="col-6 align-right">
+                <div id="continue-disabled" class="btn btn-secondary">Continue to @(Model.Steps.Next.Name)</div>
+                <button id="continue" class="bg-@(Model.CheckoutPage.PrimaryColor) btn btn-primary" type="submit" style="display: none;">Continue to @(Model.Steps.Next.Name)</button>
+            </div>
+        }
+    </div>
+}
